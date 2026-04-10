@@ -29,7 +29,7 @@
             padding: 20px;
         }
 
-        /* Kart Tasarımı */
+        /* Kart Tasarımı (YENİ ARKA PLAN FOTOĞRAFI) */
         .card {
             background: rgba(250, 240, 230, 0); 
             backdrop-filter: blur(10px);
@@ -44,6 +44,7 @@
             z-index: 10;
             box-sizing: border-box;
             overflow: hidden; 
+            margin-top: 30px; /* Başlık kalktığı için kartı biraz aşağı alalım */
         }
 
         .card::before {
@@ -58,14 +59,6 @@
             background-position: center;
             z-index: -1; 
             opacity: 0.8; 
-        }
-
-        h1 {
-            color: #FF006F;
-            font-size: 2.6em;
-            margin: 0 0 20px 0;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
-            line-height: 1.2;
         }
 
         /* 3D Fotoğraf Galerisi */
@@ -84,7 +77,6 @@
             background: transparent;
             cursor: pointer;
             transform: rotate(-3deg);
-            /* Safari'de tıklama efektini netleştirmek için */
             -webkit-tap-highlight-color: transparent;
         }
 
@@ -104,7 +96,6 @@
             border-radius: 20px;
         }
 
-        /* YENİ: Hover yerine 'flipped' sınıfı gelince dönecek */
         .photo-inner.flipped {
             transform: rotateY(180deg);
             -webkit-transform: rotateY(180deg);
@@ -151,6 +142,7 @@
             border-radius: 15px;
         }
 
+        /* Mesaj Alanı */
         .message {
             color: #4A148C; 
             font-size: 1.5em;
@@ -174,6 +166,7 @@
             50% { opacity: 0; }
         }
 
+        /* Müzik Butonu */
         .music-toggle {
             position: fixed;
             bottom: 25px;
@@ -206,9 +199,9 @@
             100% { box-shadow: 0 0 0 0 rgba(240, 98, 146, 0); }
         }
 
+        /* Mobil Uyumluluk */
         @media (max-width: 600px) {
-            .card { padding: 30px 20px; border-radius: 20px; }
-            h1 { font-size: 1.8em; margin-bottom: 15px; } 
+            .card { padding: 30px 20px; border-radius: 20px; margin-top: 15px; }
             .gallery { gap: 10px; }
             .photo-frame { width: 100px; height: 100px; }
             .message { font-size: 1.2em; min-height: 110px; }
@@ -223,15 +216,11 @@
         }
     </style>
 </head>
-<body>
-
-    <audio id="bg-music" loop>
+<body onclick="createSparkle(event)"> <audio id="bg-music" loop>
         <source src="Manifest-Manifest-ft-Arem-Ozguc-Arman-Aydin-17.mp3" type="audio/mpeg">
     </audio>
 
     <div class="card">
-        <h1>🪩✨Doğum Günün Kutlu<br> Olsun Elif İnci✨🪩</h1>
-        
         <div class="gallery">
             <div class="photo-frame" onclick="flipCard(this)">
                 <div class="photo-inner">
@@ -275,7 +264,24 @@
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
     <script>
-        // YENİ: Kart Döndürme Fonksiyonu
+        // YENİ: Işıltı Oluşturma Fonksiyonu
+        function createSparkle(event) {
+            // Dokunulan noktanın koordinatlarını al
+            const x = event.clientX / window.innerWidth;
+            const y = event.clientY / window.innerHeight;
+
+            // Rengarenk bir konfeti patlaması simüle et
+            confetti({
+                particleCount: 15, // Işıltı sayısı
+                spread: 360,      // Her yöne dağılması için
+                origin: { x: x, y: y }, // Tam dokunulan noktadan
+                colors: ['#f06292', '#ba68c8', '#ffeb3b', '#4A148C', '#ffffff'], // Işıltı renkleri
+                shapes: ['square', 'circle', 'emoji'], // Karışık şekiller
+                emoji: ['✨', '🌟', '💖', '⭐'] // Işıltılı emojiler
+            });
+        }
+
+        // Kart Döndürme Fonksiyonu
         function flipCard(element) {
             const innerCard = element.querySelector('.photo-inner');
             innerCard.classList.toggle('flipped');
