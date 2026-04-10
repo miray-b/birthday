@@ -60,14 +60,12 @@
             opacity: 0.8; 
         }
 
-        /* GÜNCELLENEN BAŞLIK STİLİ */
         h1 {
-            color: #FF006F; /* Senin seçtiğin pembe tonu */
-            font-size: 2.6em; /* Uzun ismin sığması ve 2 satır olması için biraz küçültüldü */
+            color: #FF006F;
+            font-size: 2.6em;
             margin: 0 0 20px 0;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
             line-height: 1.2;
-            -webkit-text-stroke: 0; /* Çerçeveyi kaldır */
         }
 
         /* 3D Fotoğraf Galerisi */
@@ -86,6 +84,8 @@
             background: transparent;
             cursor: pointer;
             transform: rotate(-3deg);
+            /* Safari'de tıklama efektini netleştirmek için */
+            -webkit-tap-highlight-color: transparent;
         }
 
         .photo-frame:nth-child(even) {
@@ -104,7 +104,8 @@
             border-radius: 20px;
         }
 
-        .photo-frame:hover .photo-inner {
+        /* YENİ: Hover yerine 'flipped' sınıfı gelince dönecek */
+        .photo-inner.flipped {
             transform: rotateY(180deg);
             -webkit-transform: rotateY(180deg);
         }
@@ -150,7 +151,6 @@
             border-radius: 15px;
         }
 
-        /* Mesaj Alanı */
         .message {
             color: #4A148C; 
             font-size: 1.5em;
@@ -174,7 +174,6 @@
             50% { opacity: 0; }
         }
 
-        /* Müzik Butonu */
         .music-toggle {
             position: fixed;
             bottom: 25px;
@@ -207,10 +206,8 @@
             100% { box-shadow: 0 0 0 0 rgba(240, 98, 146, 0); }
         }
 
-        /* Mobil Uyumluluk */
         @media (max-width: 600px) {
             .card { padding: 30px 20px; border-radius: 20px; }
-            /* Mobilde Elif İnci isminin taşmaması ve sığması için daha da küçültüldü */
             h1 { font-size: 1.8em; margin-bottom: 15px; } 
             .gallery { gap: 10px; }
             .photo-frame { width: 100px; height: 100px; }
@@ -236,7 +233,7 @@
         <h1>🪩✨Doğum Günün Kutlu<br> Olsun Elif İnci✨🪩</h1>
         
         <div class="gallery">
-            <div class="photo-frame">
+            <div class="photo-frame" onclick="flipCard(this)">
                 <div class="photo-inner">
                     <div class="photo-front">
                         <img src="pinkbaloon.png" alt="Kart 1 Ön" onerror="this.style.display='none'">
@@ -247,7 +244,7 @@
                 </div>
             </div>
 
-            <div class="photo-frame">
+            <div class="photo-frame" onclick="flipCard(this)">
                 <div class="photo-inner">
                     <div class="photo-front">
                         <img src="hbbaloon.png" alt="Kart 2 Ön" onerror="this.style.display='none'">
@@ -258,7 +255,7 @@
                 </div>
             </div>
 
-            <div class="photo-frame">
+            <div class="photo-frame" onclick="flipCard(this)">
                 <div class="photo-inner">
                     <div class="photo-front">
                         <img src="goldbaloon.png" alt="Kart 3 Ön" onerror="this.style.display='none'">
@@ -278,6 +275,12 @@
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
     <script>
+        // YENİ: Kart Döndürme Fonksiyonu
+        function flipCard(element) {
+            const innerCard = element.querySelector('.photo-inner');
+            innerCard.classList.toggle('flipped');
+        }
+
         // Daktilo Efekti
         const textToType = '"Halasının miniği, iyi ki doğdun. İstediğin her şeyin gerçekleşmesi dileğiyle. Seni çok seviyorum. İyi ki varsın."';
         const typeTarget = document.getElementById('typewriter');
@@ -316,7 +319,6 @@
             isPlaying = !isPlaying;
         });
 
-        // Sayfa Yüklenince Animasyonlar
         window.onload = function() {
             setTimeout(typeWriter, 1000);
 
