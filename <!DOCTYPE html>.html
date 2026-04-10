@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>İyi ki Doğdun Elif İnci!</title>
+    
+    <style>
+        /* Arka Plan Animasyonu */
+        @keyframes lightGlow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(-45deg, #f06292, #ba68c8, #f8bbd0, #e1bee7);
+            background-size: 400% 400%;
+            animation: lightGlow 10s ease infinite;
+            font-family: 'Times New Roman', Times, serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+            box-sizing: border-box;
+            padding: 20px;
+        }
+
+        /* Kart Tasarımı */
+        .card {
+            background: rgba(250, 240, 230, 0); 
+            backdrop-filter: blur(10px);
+            border-radius: 30px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+            padding: 50px;
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+            border: 4px solid rgba(255, 255, 255, 0.5);
+            position: relative;
+            z-index: 10;
+            box-sizing: border-box;
+            overflow: hidden; 
+        }
+
+        .card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('bg.jpg');
+            background-size: cover;
+            background-position: center;
+            z-index: -1; 
+            opacity: 0.8; 
+        }
+
+        /* GÜNCELLENEN BAŞLIK STİLİ */
+        h1 {
+            color: #FF006F; /* Senin seçtiğin pembe tonu */
+            font-size: 2.6em; /* Uzun ismin sığması ve 2 satır olması için biraz küçültüldü */
+            margin: 0 0 20px 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            line-height: 1.2;
+            -webkit-text-stroke: 0; /* Çerçeveyi kaldır */
+        }
+
+        /* 3D Fotoğraf Galerisi */
+        .gallery {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-bottom: 30px;
+            perspective: 1000px;
+            flex-wrap: wrap;
+        }
+
+        .photo-frame {
+            width: 140px;
+            height: 140px;
+            background: transparent;
+            cursor: pointer;
+            transform: rotate(-3deg);
+        }
+
+        .photo-frame:nth-child(even) {
+            transform: rotate(3deg);
+        }
+
+        .photo-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+            -webkit-transform-style: preserve-3d; 
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            border-radius: 20px;
+        }
+
+        .photo-frame:hover .photo-inner {
+            transform: rotateY(180deg);
+            -webkit-transform: rotateY(180deg);
+        }
+
+        .photo-front, .photo-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden; 
+            border-radius: 20px;
+            border: 4px solid #f06292;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-sizing: border-box;
+            background: white;
+            color: #f06292;
+            font-weight: bold;
+            overflow: hidden;
+        }
+
+        .photo-front {
+            z-index: 2;
+            transform: rotateY(0deg);
+            -webkit-transform: rotateY(0deg);
+        }
+
+        .photo-back {
+            transform: rotateY(180deg);
+            -webkit-transform: rotateY(180deg);
+            background: #fce4ec;
+            z-index: 1;
+        }
+        
+        .photo-front img, .photo-back img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+            border-radius: 15px;
+        }
+
+        /* Mesaj Alanı */
+        .message {
+            color: #4A148C; 
+            font-size: 1.5em;
+            line-height: 1.5;
+            font-weight: 600;
+            font-style: italic;
+            min-height: 90px;
+        }
+        
+        .cursor {
+            display: inline-block;
+            width: 3px;
+            height: 1.2em;
+            background-color: #4A148C;
+            vertical-align: middle;
+            animation: blink 1s step-end infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        /* Müzik Butonu */
+        .music-toggle {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            background: linear-gradient(45deg, #f06292, #ba68c8);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 12px 20px;
+            font-size: 1.2em;
+            font-family: 'Times New Roman', Times, serif;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            z-index: 100;
+            transition: transform 0.3s;
+        }
+
+        .music-toggle:hover {
+            transform: scale(1.05);
+        }
+
+        .music-toggle.playing {
+            animation: pulseMusic 2s infinite;
+        }
+
+        @keyframes pulseMusic {
+            0% { box-shadow: 0 0 0 0 rgba(240, 98, 146, 0.7); }
+            70% { box-shadow: 0 0 0 15px rgba(240, 98, 146, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(240, 98, 146, 0); }
+        }
+
+        /* Mobil Uyumluluk */
+        @media (max-width: 600px) {
+            .card { padding: 30px 20px; border-radius: 20px; }
+            /* Mobilde Elif İnci isminin taşmaması ve sığması için daha da küçültüldü */
+            h1 { font-size: 1.8em; margin-bottom: 15px; } 
+            .gallery { gap: 10px; }
+            .photo-frame { width: 100px; height: 100px; }
+            .message { font-size: 1.2em; min-height: 110px; }
+            .music-toggle {
+                bottom: 15px;
+                right: 50%;
+                transform: translateX(50%);
+                font-size: 1em;
+                padding: 10px 15px;
+            }
+            .music-toggle:hover { transform: translateX(50%) scale(1.05); }
+        }
+    </style>
+</head>
+<body>
+
+    <audio id="bg-music" loop>
+        <source src="Manifest-Manifest-ft-Arem-Ozguc-Arman-Aydin-17.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="card">
+        <h1>🪩✨Doğum Günün Kutlu<br> Olsun Elif İnci✨🪩</h1>
+        
+        <div class="gallery">
+            <div class="photo-frame">
+                <div class="photo-inner">
+                    <div class="photo-front">
+                        <img src="pinkbaloon.png" alt="Kart 1 Ön" onerror="this.style.display='none'">
+                    </div>
+                    <div class="photo-back">
+                        <img src="IMG_0712.jpg" alt="Kart 1 Arka" onerror="this.style.display='none'">
+                    </div>
+                </div>
+            </div>
+
+            <div class="photo-frame">
+                <div class="photo-inner">
+                    <div class="photo-front">
+                        <img src="hbbaloon.png" alt="Kart 2 Ön" onerror="this.style.display='none'">
+                    </div>
+                    <div class="photo-back">
+                        <img src="IMG_9099.jpg" alt="Kart 2 Arka" onerror="this.style.display='none'">
+                    </div>
+                </div>
+            </div>
+
+            <div class="photo-frame">
+                <div class="photo-inner">
+                    <div class="photo-front">
+                        <img src="goldbaloon.png" alt="Kart 3 Ön" onerror="this.style.display='none'">
+                    </div>
+                    <div class="photo-back">
+                        <img src="IMG_9098.jpg" alt="Kart 3 Arka" onerror="this.style.display='none'">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <p class="message" id="typewriter"><span class="cursor" id="cursor"></span></p>
+    </div>
+
+    <button id="music-btn" class="music-toggle">🎵 Müziği Aç</button>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <script>
+        // Daktilo Efekti
+        const textToType = '"Halasının miniği, iyi ki doğdun. İstediğin her şeyin gerçekleşmesi dileğiyle. Seni çok seviyorum. İyi ki varsın."';
+        const typeTarget = document.getElementById('typewriter');
+        const cursor = document.getElementById('cursor');
+        let index = 0;
+        const typingSpeed = 60; 
+
+        function typeWriter() {
+            if (index < textToType.length) {
+                cursor.remove();
+                typeTarget.innerHTML += textToType.charAt(index);
+                typeTarget.appendChild(cursor);
+                index++;
+                setTimeout(typeWriter, typingSpeed);
+            } else {
+                setTimeout(() => cursor.remove(), 2000);
+            }
+        }
+
+        // Müzik Kontrolü
+        const musicBtn = document.getElementById('music-btn');
+        const bgMusic = document.getElementById('bg-music');
+        let isPlaying = false;
+
+        musicBtn.addEventListener('click', function() {
+            if (isPlaying) {
+                bgMusic.pause();
+                musicBtn.innerHTML = '🎵 Müziği Aç';
+                musicBtn.classList.remove('playing');
+            } else {
+                bgMusic.play();
+                musicBtn.innerHTML = '⏸️ Müziği Durdur';
+                musicBtn.classList.add('playing');
+                confetti({ particleCount: 30, spread: 40, origin: { y: 0.8 }, colors: ['#f06292', '#ba68c8'] });
+            }
+            isPlaying = !isPlaying;
+        });
+
+        // Sayfa Yüklenince Animasyonlar
+        window.onload = function() {
+            setTimeout(typeWriter, 1000);
+
+            const duration = 5 * 1000;
+            const animationEnd = Date.now() + duration;
+            const colors = ['#f06292', '#ba68c8', '#ffffff', '#ffeb3b'];
+            const spreadValue = window.innerWidth < 600 ? 40 : 55; 
+
+            (function frame() {
+                const timeLeft = animationEnd - Date.now();
+                if (timeLeft <= 0) return;
+
+                confetti({ particleCount: 2, angle: 60, spread: spreadValue, origin: { x: 0 }, colors: colors });
+                confetti({ particleCount: 2, angle: 120, spread: spreadValue, origin: { x: 1 }, colors: colors });
+
+                requestAnimationFrame(frame);
+            }());
+            
+            confetti({ particleCount: window.innerWidth < 600 ? 100 : 150, spread: 70, origin: { y: 0.6 }, colors: colors });
+        };
+    </script>
+</body>
+</html>
